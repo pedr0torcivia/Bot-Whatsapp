@@ -42,8 +42,6 @@ npm start
 
 ## Comandos soportados
 
-También podés usar `@Bot ayuda` para ver esta lista desde el grupo.
-
 1. Agregar tarea:
 
 ```text
@@ -76,7 +74,7 @@ También podés usar `@Bot ayuda` para ver esta lista desde el grupo.
 
 ## Recordatorios automáticos
 
-- **Resumen semanal**: lunes a las **09:00** (zona horaria configurable con `TZ`, por defecto `America/Argentina/Buenos_Aires`), envía pendientes de los próximos 7 días.
+- **Resumen semanal**: lunes a las **09:00**, envía pendientes de los próximos 7 días.
 - **Cierre en 2 días**: todos los días a las **09:00**, avisa actividades que vencen en 2 días y marca `reminded_2d = 1`.
 
 ## Notas
@@ -84,46 +82,3 @@ También podés usar `@Bot ayuda` para ver esta lista desde el grupo.
 - `due_date` se guarda en formato ISO `YYYY-MM-DD`.
 - El parser acepta `DD/MM/YY` y lo interpreta con año de 4 dígitos (ej. `07/05/26` → `2026-05-07`).
 - Base SQLite local: `bot.db`.
-
-## Solución de errores comunes (Windows)
-
-Si `npm install` falla por descarga de Chrome de Puppeteer:
-
-```bat
-set PUPPETEER_SKIP_DOWNLOAD=true
-npm install
-```
-
-Si `npm start` muestra `Could not find Chrome`, configurá la ruta del Chrome instalado:
-
-```bat
-set CHROME_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe
-npm start
-```
-
-También podés instalar el navegador de Puppeteer manualmente:
-
-```bat
-npx puppeteer browsers install chrome
-```
-
-Si sigue sin encontrar Chrome, buscá primero una ruta real:
-
-```bat
-where chrome
-where msedge
-```
-
-Y usá esa ruta exacta en variable de entorno (con o sin comillas):
-
-```bat
-set CHROME_PATH="C:\Users\TU_USUARIO\AppData\Local\Google\Chrome\Application\chrome.exe"
-npm start
-```
-
-También podés usar:
-
-```bat
-set PUPPETEER_EXECUTABLE_PATH="C:\Users\TU_USUARIO\AppData\Local\Google\Chrome\Application\chrome.exe"
-npm start
-```
