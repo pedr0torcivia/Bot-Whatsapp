@@ -8,40 +8,30 @@ const {
 } = require('./db');
 const { formatActivityLine } = require('./parser');
 
-const CRON_TIMEZONE = process.env.TZ || 'America/Argentina/Buenos_Aires';
-
 function setupSchedulers(client) {
-  cron.schedule(
-    '0 9 * * 1',
-    async () => {
-      try {
-        await sendWeeklySummary(client);
-      } catch (err) {
-        console.error('❌ Error en resumen semanal:', err.message);
-      }
-    },
-    { timezone: CRON_TIMEZONE }
-  );
+  cron.schedule('0 9 * * 1', async () => {
+    try {
+      await sendWeeklySummary(client);
+    } catch (err) {
+      console.error('❌ Error en resumen semanal:', err.message);
+    }
+  });
 
-  cron.schedule(
-    '0 9 * * *',
-    async () => {
-      try {
-        await sendTwoDaysReminder(client);
-      } catch (err) {
-        console.error('❌ Error en recordatorio 2 días:', err.message);
-      }
-    },
-    { timezone: CRON_TIMEZONE }
-  );
+  cron.schedule('0 9 * * *', async () => {
+    try {
+      await sendTwoDaysReminder(client);
+    } catch (err) {
+      console.error('❌ Error en recordatorio 2 días:', err.message);
+    }
+  });
 
-  console.log(`✅ Schedulers activos (TZ=${CRON_TIMEZONE}): lunes 09:00 y diario 09:00`);
+  console.log('✅ Schedulers activos: lunes 09:00 y diario 09:00');
 }
 
 async function sendWeeklySummary(client) {
   const groups = await getAllGroups();
   const start = dayjs().startOf('day').format('YYYY-MM-DD');
-  const end = dayjs().add(6, 'day').format('YYYY-MM-DD');
+  const end = dayjs().add(7, 'day').endOf('day').format('YYYY-MM-DD');
 
   for (const row of groups) {
     const groupId = row.group_id;

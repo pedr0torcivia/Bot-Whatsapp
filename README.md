@@ -42,8 +42,6 @@ npm start
 
 ## Comandos soportados
 
-También podés usar `@Bot ayuda` para ver esta lista desde el grupo.
-
 1. Agregar tarea:
 
 ```text
@@ -76,7 +74,7 @@ También podés usar `@Bot ayuda` para ver esta lista desde el grupo.
 
 ## Recordatorios automáticos
 
-- **Resumen semanal**: lunes a las **09:00** (zona horaria configurable con `TZ`, por defecto `America/Argentina/Buenos_Aires`), envía pendientes de los próximos 7 días.
+- **Resumen semanal**: lunes a las **09:00**, envía pendientes de los próximos 7 días.
 - **Cierre en 2 días**: todos los días a las **09:00**, avisa actividades que vencen en 2 días y marca `reminded_2d = 1`.
 
 ## Notas

@@ -1,4 +1,5 @@
 const qrcode = require('qrcode-terminal');
+const dayjs = require('dayjs');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const {
   initDb,
@@ -7,7 +8,7 @@ const {
   markDone,
   deleteActivity
 } = require('./db');
-const { parseBotMessage, formatActivityLine, helpMessage } = require('./parser');
+const { parseBotMessage, formatActivityLine } = require('./parser');
 const { setupSchedulers } = require('./scheduler');
 
 async function bootstrap() {
@@ -34,17 +35,13 @@ async function bootstrap() {
   client.on('message', async (message) => {
     try {
       const chat = await message.getChat();
+
       if (!chat.isGroup) return;
 
       const parsed = parseBotMessage(message.body);
       if (parsed.command === 'ignore') return;
 
       const groupId = message.from;
-
-      if (parsed.command === 'help') {
-        await message.reply(helpMessage());
-        return;
-      }
 
       if (parsed.command === 'error') {
         await message.reply(`❌ ${parsed.message}`);
@@ -69,11 +66,13 @@ async function bootstrap() {
             `Actividad: ${parsed.payload.title}`
           ].join('\n')
         );
+
         return;
       }
 
       if (parsed.command === 'list') {
         const rows = await listPendingByGroup(groupId);
+
         if (!rows.length) {
           await message.reply('📌 No hay actividades pendientes.');
           return;
